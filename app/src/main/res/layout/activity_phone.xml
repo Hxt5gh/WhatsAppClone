@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PhoneActivity"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="@color/white2">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/whatsapp" />
+        <TextView
+            android:layout_marginTop="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="App Will Send an SMS to Verify Your Phone Number"
+            android:textColor="@color/black"
+            android:gravity="center"/>
+
+
+
+
+
+            <EditText
+                android:id="@+id/phoneno_textView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="1.5"
+                android:background="@color/white"
+                android:ems="10"
+                android:hint="@string/enter_phone_no"
+                android:inputType="phone"
+                android:padding="10dp"
+                android:textSize="24sp" />
+
+
+            <Button
+                android:id="@+id/btn_otpsend"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/send_otp"
+                app:cornerRadius="5dp"
+                android:layout_marginTop="10dp"
+            />
+
+
+
+
+
+
+        <EditText
+            android:id="@+id/otp_textView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:ems="10"
+            android:layout_marginTop="30dp"
+            android:hint="@string/otp"
+            android:inputType="number"
+            android:padding="10dp"
+            android:textSize="24sp" />
+
+        <Button
+            android:id="@+id/btn_Submit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/submit"
+            app:cornerRadius="5dp"
+            android:layout_marginTop="10dp"/>
+
+
+
+
+
+
+
+    </LinearLayout>
+
+</LinearLayout>
