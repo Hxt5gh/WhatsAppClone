@@ -23,6 +23,8 @@ public class UsersClass {
         this.lastMsg = lastMsg;
     }
 
+
+
     public UsersClass(String userName, String mail , String password) {
         this.userName = userName;
         this.password = password;

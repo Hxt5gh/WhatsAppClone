@@ -10,14 +10,20 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Switch;
+import android.widget.TableLayout;
 
+import com.example.android.whatsapp.adapter.fragmentAdapter;
 import com.example.android.whatsapp.databinding.ActivityMainBinding;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private FirebaseAuth mAuth;
+    private String[] pageElements;
+    private fragmentAdapter adapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +31,18 @@ public class MainActivity extends AppCompatActivity {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
+
+        pageElements= new String[]{"Chats", "Status", "Call"};
+
+
+        adapter = new fragmentAdapter(this);
+        binding.viewPager2.setAdapter(adapter);
+
+        new TabLayoutMediator(binding.tabLayout , binding.viewPager2 , ((tab, position) -> tab.setText(pageElements[position]))).attach();
+
+
+
+
 
 
     }
