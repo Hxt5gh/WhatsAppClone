@@ -7,6 +7,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,6 +37,7 @@ public class ChatsFragment extends Fragment {
     private DatabaseReference mRef;
     private ValueEventListener valueEventListener;
     private  ArrayList<UsersClass> list;
+    private static final String LLL = "ChatsFragment";
 
     public ChatsFragment() {
         // Required empty public constructor
@@ -52,37 +54,14 @@ public class ChatsFragment extends Fragment {
         mRef = database.getReference("Users");
 
 
-        //one way or reading data from the database
-//        valueEventListener = new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//
-//                for (DataSnapshot data: snapshot.getChildren()) {
-//
-//                    UsersClass usersClass =data.getValue(UsersClass.class);
-//                    list.add(usersClass);
-//                    adapter.notifyDataSetChanged();
-//
-//                }
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        };
-//        mRef.addValueEventListener(valueEventListener);
-
-
-        //second way of readind data from ther data base
                 mRef.addChildEventListener(new ChildEventListener() {   //
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {  // call if data is present
 
 //                Toast.makeText(MainActivity.this, "new data added", Toast.LENGTH_SHORT).show();
                 UsersClass person = snapshot.getValue(UsersClass.class);
-//                person.setuID(snapshot.getKey());
-                person.setuId(person.getuId());
+
+                person.setuId(snapshot.getKey());
                 list.add(person);
                 adapter.notifyDataSetChanged();
             }

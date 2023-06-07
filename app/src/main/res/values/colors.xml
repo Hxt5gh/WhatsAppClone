@@ -16,6 +16,15 @@
     <color name="white2">#ECE5DD</color>
     <color name="background">#DCF8C6</color>
     <color name="fbColour">#1976D2</color>
+    <color name="sendColer">#dcf8c6</color>
+    <color name="receveColer">#FFFFFFFF</color>
 
 
+<!--    #EDF8F5-->
+<!--    #075E54-->
+<!--    #128C7E-->
+<!--    #1EBEA5-->
+<!--    #77D7C8-->
+<!--    #D0E9EA-->
+<!--    #EDF8F5-->
 </resources>

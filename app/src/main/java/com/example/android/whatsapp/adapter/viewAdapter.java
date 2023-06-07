@@ -56,6 +56,7 @@ public class viewAdapter  extends RecyclerView.Adapter<viewAdapter.viewholder>
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent(context , ChatDetailActivity.class);
+                    intent.putExtra("senderuid" , list.get(p).getuId());
                     intent.putExtra("image_url", list.get(p).getProfilepic());
                     intent.putExtra("User_name" , list.get(p).getUserName());
 
