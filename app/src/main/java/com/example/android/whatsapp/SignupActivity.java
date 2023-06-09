@@ -109,7 +109,8 @@ public class SignupActivity extends AppCompatActivity {
                                     Toast.makeText(SignupActivity.this, "SuccessFull  agein ", Toast.LENGTH_LONG).show();
                                     myRef.child("Users").child(id).setValue(usersClass);
 
-
+                                   Intent i = new Intent( SignupActivity.this ,MainActivity.class);
+                                   startActivity(i);
 
 
 

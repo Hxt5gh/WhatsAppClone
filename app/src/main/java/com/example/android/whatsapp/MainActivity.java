@@ -13,6 +13,7 @@ import android.widget.Switch;
 import android.widget.TableLayout;
 
 import com.example.android.whatsapp.adapter.fragmentAdapter;
+import com.example.android.whatsapp.chatActivities.GroupChatActivity;
 import com.example.android.whatsapp.databinding.ActivityMainBinding;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.google.firebase.auth.FirebaseAuth;
@@ -49,8 +50,9 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.menue , menu);
-        return super.onCreateOptionsMenu(menu);
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menue , menu);
+        return true;
     }
 
     @Override
@@ -58,10 +60,15 @@ public class MainActivity extends AppCompatActivity {
         switch(item.getItemId())
         {
             case R.id.newGroup:
+                Intent intenti = new Intent(MainActivity.this , GroupChatActivity.class);
+                startActivity(intenti);
 
                 break;
 
-            case R.id.setting:
+            case R.id.setting :
+                    Intent  sett = new Intent(MainActivity.this , SettingActivity.class);
+                    startActivity(sett);
+
                 break;
 
             case R.id.logout:

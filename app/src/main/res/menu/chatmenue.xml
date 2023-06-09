@@ -1,16 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/menue"
+        android:title=""
+        android:icon="@drawable/dots"
+        app:showAsAction="ifRoom">
+
+
+        <menu>
+
+         <item
         android:id="@+id/idInfo"
-        android:title="Info"/>
-    <item
+        android:title="Info"
+      />
+         <item
         android:id="@+id/idSearch"
-        android:title="Search"/>
+        android:title="Search"
+       />
 
-    <item
+         <item
         android:id="@+id/idWalpaper"
-        android:title="Walpaper"/>
+        android:title="Walpaper"
+       />
+        </menu>
 
+    </item>
 </menu>

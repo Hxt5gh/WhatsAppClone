@@ -8,6 +8,15 @@ public class UsersClass {
     String password;
     String mail;
     String lastMsg;
+    String about;
+
+    public String getAbout() {
+        return about;
+    }
+
+    public void setAbout(String about) {
+        this.about = about;
+    }
 
     public UsersClass() {
     }

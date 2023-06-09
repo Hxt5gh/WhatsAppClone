@@ -5,6 +5,25 @@ public class messageModel {
     String uId;
     String message;
     long lastMessage;
+    String nName;
+    String recvierName;
+
+    public String getRecvierName() {
+        return recvierName;
+    }
+
+    public void setRecvierName(String recvierName) {
+        this.recvierName = recvierName;
+    }
+
+
+    public String getnName() {
+        return nName;
+    }
+
+    public void setnName(String nName) {
+        this.nName = nName;
+    }
 
     public messageModel(String uId , String message) {
         this.message = message;

@@ -33,6 +33,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -45,6 +46,7 @@ public class ChatDetailActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     private ArrayList<messageModel> list;
     private static final String MYTAG = "ChatDetailActivity";
+    String senderName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,9 +60,10 @@ public class ChatDetailActivity extends AppCompatActivity {
         mRef = database.getReference();
 
 
+
         String  senderUid = mAuth.getUid();
         Intent intent = getIntent();
-        String receverUid = intent.getStringExtra("senderuid" );
+        String receverUid = intent.getStringExtra("receiverUID" );
         String  userprofile =    intent.getStringExtra("image_url");
         String username = intent.getStringExtra("User_name" );
 
@@ -91,12 +94,32 @@ public class ChatDetailActivity extends AppCompatActivity {
 
 
 
+        mRef.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                Log.d("TAG", "onDataChange: "  +snapshot.getValue(String.class));
+                senderName = snapshot.getValue(String.class);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+
 
         mRef.child("Chats").child(senderRoom).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
                     messageModel model = snapshot.getValue(messageModel.class);
+                    model.setnName(String.valueOf(senderName));
+                    model.setnName(senderName);
+                    model.setRecvierName(username);
                     list.add(model);
                     chatAdapter.notifyDataSetChanged();
 
@@ -176,8 +199,9 @@ public class ChatDetailActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        new MenuInflater(this).inflate(R.menu.chatmenue , menu);
-        return super.onCreateOptionsMenu(menu);
+       MenuInflater inflater = getMenuInflater();
+       inflater.inflate(R.menu.chatmenue , menu);
+       return true;
     }
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {

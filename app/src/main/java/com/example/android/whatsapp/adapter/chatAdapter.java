@@ -76,6 +76,9 @@ public class chatAdapter  extends  RecyclerView.Adapter {
             String t = dateFormat.format(time);
             ((senderViewHolder) holder).senderTime.setText(t);
 
+            ((senderViewHolder)holder).senName.setText(models.get(position).getnName());
+
+
         }
         else
         {
@@ -83,6 +86,8 @@ public class chatAdapter  extends  RecyclerView.Adapter {
             long time = models.get(position).getLastMessage();
             String t = dateFormat.format(time);
             ((receiverViewHolder) holder).receiverTime.setText(t);
+
+            ((receiverViewHolder)holder).recName.setText(models.get(position).getRecvierName());
 
         }
 
@@ -95,21 +100,23 @@ public class chatAdapter  extends  RecyclerView.Adapter {
 
     public class senderViewHolder extends RecyclerView.ViewHolder {
 
-        TextView senderTxt , senderTime;
+        TextView senderTxt , senderTime , senName;
 
         public senderViewHolder(@NonNull View itemView) {
             super(itemView);
             senderTime = itemView.findViewById(R.id.senderTime);
             senderTxt = itemView.findViewById(R.id.senderText);
+            senName = itemView.findViewById(R.id.senderName);
         }
     }
 
     public class receiverViewHolder extends RecyclerView.ViewHolder {
-        TextView receiverText , receiverTime;
+        TextView receiverText , receiverTime , recName;
         public receiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverText = itemView.findViewById(R.id.receiverText);
             receiverTime = itemView.findViewById(R.id.receiverTime);
+            recName = itemView.findViewById(R.id.receiverName);
 
         }
     }
