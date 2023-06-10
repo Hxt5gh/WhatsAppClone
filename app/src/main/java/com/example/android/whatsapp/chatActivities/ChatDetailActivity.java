@@ -7,6 +7,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
 import com.bumptech.glide.request.RequestOptions;
 import com.example.android.whatsapp.LoginActivity;
 import com.example.android.whatsapp.MainActivity;
@@ -92,9 +95,18 @@ public class ChatDetailActivity extends AppCompatActivity {
         final  String senderRoom = senderUid + receverUid;
         final  String receiverRoom = receverUid  + senderUid;
 
+        new Handler(Looper.getMainLooper()).post(new Runnable()
+        {
+            @Override
+            public void run()
+            {
 
 
-        mRef.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").addValueEventListener(new ValueEventListener() {
+
+
+
+                //fetching username for sender name
+          mRef.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -110,9 +122,8 @@ public class ChatDetailActivity extends AppCompatActivity {
         });
 
 
-
-
-        mRef.child("Chats").child(senderRoom).addChildEventListener(new ChildEventListener() {
+          //creating room of chat
+           mRef.child("Chats").child(senderRoom).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
@@ -146,11 +157,8 @@ public class ChatDetailActivity extends AppCompatActivity {
             }
         });
 
-
-
-
-
-        binding.btnSendText.setOnClickListener(new View.OnClickListener() {
+                //publishing caht on fireabase
+            binding.btnSendText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(ChatDetailActivity.this, "send", Toast.LENGTH_SHORT).show();
@@ -190,6 +198,9 @@ public class ChatDetailActivity extends AppCompatActivity {
         });
 
 
+
+            }
+        });
     }
 
 

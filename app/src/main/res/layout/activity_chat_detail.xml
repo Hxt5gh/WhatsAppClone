@@ -105,6 +105,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <androidx.recyclerview.widget.RecyclerView
+        style="@style/SCREEN"
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -120,11 +121,11 @@
         android:layout_height="50dp"
         android:orientation="horizontal"
         android:padding="5dp"
+        style="@style/SCREEN"
 
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="@color/white2"
+
         android:gravity="center">
 
         <EditText
@@ -134,7 +135,9 @@
             android:layout_weight="1"
             android:background="@drawable/type_background"
             android:ems="10"
-            android:hint="Message"
+            android:textColor="@color/black"
+            android:hint="Message..."
+            android:textColorHint="@color/black"
             android:inputType="textPersonName"
             android:padding="9dp" />
 

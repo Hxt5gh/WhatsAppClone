@@ -15,6 +15,11 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.MediaStoreSignature;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.android.whatsapp.R;
 import com.example.android.whatsapp.chatActivities.ChatDetailActivity;
 import com.example.android.whatsapp.models.UsersClass;
@@ -46,15 +51,15 @@ public class viewAdapter  extends RecyclerView.Adapter<viewAdapter.viewholder>
 
     @Override
     public void onBindViewHolder(@NonNull viewholder holder, int position) {
+        int p = position;
 
-        if (list.get(position).getuId().equals(FirebaseAuth.getInstance().getUid()))
+        if (list.get(p).getuId().equals(FirebaseAuth.getInstance().getUid()))
         {
             holder.username.setVisibility(View.GONE);
             holder.lastmsg.setVisibility(View.GONE);
             holder.imageView.setVisibility(View.GONE);
             holder.lastmsg.setVisibility(View.GONE);
         }
-        int p = position;
 
         FirebaseDatabase.getInstance().getReference().
                 child("Chats").
@@ -79,16 +84,23 @@ public class viewAdapter  extends RecyclerView.Adapter<viewAdapter.viewholder>
                     }
                 });
 
-        holder.username.setText(list.get(position).getUserName());
+        holder.username.setText(list.get(p).getUserName());
+
+
+        RequestOptions requestOptions = new RequestOptions()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .override(100, 100); // resize does not respect aspect ratio
+
 
 
         new Handler(Looper.getMainLooper()).post(new Runnable() {
             @Override
             public void run() {
 
-        if (list.get(position).getProfilepic() != null)
+        if (list.get(p).getProfilepic() != null)
         {
-        Glide.with(context).load(list.get(position).getProfilepic()).into(holder.imageView);
+        Glide.with(context).load(list.get(p).getProfilepic()).apply(requestOptions).into(holder.imageView);
+            Glide.get(context).setMemoryCategory(MemoryCategory.HIGH);
         }
         else
         {
@@ -128,5 +140,11 @@ public class viewAdapter  extends RecyclerView.Adapter<viewAdapter.viewholder>
             lastmsg= itemView.findViewById(R.id.lastmessage);
            // time = itemView.findViewById(R.id.idtime);
         }
+    }
+
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        super.onDetachedFromRecyclerView(recyclerView);
+        Glide.get(context).setMemoryCategory(MemoryCategory.NORMAL);
     }
 }

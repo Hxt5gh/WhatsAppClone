@@ -10,6 +10,7 @@
     android:background="@color/white2">
 
     <androidx.appcompat.widget.Toolbar
+        style="@style/TOOLBAR"
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -122,6 +123,7 @@
                 android:paddingRight="5dp"
                 android:paddingBottom="10dp"
                 android:hint="User Name"
+                android:textColorHint="@color/black"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -153,6 +155,7 @@
             android:background="@drawable/type_background"
             android:ems="10"
             android:hint="@string/name"
+            android:textColorHint="@color/black"
             android:inputType="textPersonName"
             android:paddingStart="20dp"
             android:paddingTop="5dp"
@@ -181,6 +184,7 @@
                 android:paddingRight="5dp"
                 android:paddingBottom="10dp"
                 android:hint="About"
+                android:textColorHint="@color/black"
                 android:textColor="@color/black"
                 android:textSize="18sp"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -215,6 +219,7 @@
             android:background="@drawable/type_background"
             android:ems="10"
             android:hint="About"
+            android:textColorHint="@color/black"
             android:inputType="textPersonName"
             android:paddingStart="20dp"
             android:paddingTop="5dp"
@@ -225,6 +230,7 @@
             android:layout_gravity="start"/>
 
         <Button
+            style="@style/TEXT"
             android:layout_marginTop="5dp"
             android:id="@+id/btn_Save"
             android:layout_width="wrap_content"
