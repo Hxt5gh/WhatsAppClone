@@ -5,11 +5,16 @@ import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.MemoryCategory;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.android.whatsapp.R;
 import com.example.android.whatsapp.models.messageModel;
 import com.google.firebase.auth.FirebaseAuth;
@@ -70,18 +75,52 @@ public class chatAdapter  extends  RecyclerView.Adapter {
 
         if (holder.getClass() == senderViewHolder.class)
         {
-            ((senderViewHolder)holder).senderTxt.setText(models.get(position).getMessage());
-            long time = models.get(position).getLastMessage();
+            if (models.get(position).getMessage().equals("photo"))
+            {
+                ((senderViewHolder) holder).sendImage.setVisibility(View.VISIBLE);
+                ((senderViewHolder) holder).senderTxt.setVisibility(View.GONE);
+                RequestOptions requestOptions = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .override(100, 100);
+                Glide.with(context).load(models.get(position).getImageUri()).apply(requestOptions).into(((senderViewHolder) holder).sendImage);
+                long time = models.get(position).getLastMessage();
 
-            String t = dateFormat.format(time);
-            ((senderViewHolder) holder).senderTime.setText(t);
+                String t = dateFormat.format(time);
+                ((senderViewHolder) holder).senderTime.setText(t);
 
-            ((senderViewHolder)holder).senName.setText(models.get(position).getnName());
+                ((senderViewHolder) holder).senName.setText(models.get(position).getnName());
+
+            }
+
+                ((senderViewHolder) holder).senderTxt.setText(models.get(position).getMessage());
+                long time = models.get(position).getLastMessage();
+
+                String t = dateFormat.format(time);
+                ((senderViewHolder) holder).senderTime.setText(t);
+
+                ((senderViewHolder) holder).senName.setText(models.get(position).getnName());
+
 
 
         }
-        else
+        if (holder.getClass() == receiverViewHolder.class)
         {
+
+            if (models.get(position).getMessage().equals("photo"))
+            {
+                ((receiverViewHolder) holder).receverimg.setVisibility(View.VISIBLE);
+                ((receiverViewHolder) holder).receiverText.setVisibility(View.GONE);
+                RequestOptions requestOptions = new RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .override(100, 100);
+                Glide.with(context).load(models.get(position).getImageUri()).apply(requestOptions).into(((receiverViewHolder) holder).receverimg);
+                long time = models.get(position).getLastMessage();
+
+                String t = dateFormat.format(time);
+                ((receiverViewHolder) holder).receiverText.setText(t);
+
+                ((receiverViewHolder) holder).recName.setText(models.get(position).getnName());
+            }
             ((receiverViewHolder)holder).receiverText.setText(models.get(position).getMessage());
             long time = models.get(position).getLastMessage();
             String t = dateFormat.format(time);
@@ -101,22 +140,26 @@ public class chatAdapter  extends  RecyclerView.Adapter {
     public class senderViewHolder extends RecyclerView.ViewHolder {
 
         TextView senderTxt , senderTime , senName;
+        ImageView sendImage;
 
         public senderViewHolder(@NonNull View itemView) {
             super(itemView);
             senderTime = itemView.findViewById(R.id.senderTime);
             senderTxt = itemView.findViewById(R.id.senderText);
             senName = itemView.findViewById(R.id.senderName);
+            sendImage = itemView.findViewById(R.id.senderImage);
         }
     }
 
     public class receiverViewHolder extends RecyclerView.ViewHolder {
         TextView receiverText , receiverTime , recName;
+        ImageView receverimg;
         public receiverViewHolder(@NonNull View itemView) {
             super(itemView);
             receiverText = itemView.findViewById(R.id.receiverText);
             receiverTime = itemView.findViewById(R.id.receiverTime);
             recName = itemView.findViewById(R.id.receiverName);
+            receverimg = itemView.findViewById(R.id.receiverImage);
 
         }
     }

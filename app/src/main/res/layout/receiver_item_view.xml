@@ -29,20 +29,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/receiverImage"
+        android:layout_width="250dp"
+        android:layout_height="200dp"
+        android:layout_marginEnd="15dp"
+        android:scaleType="fitCenter"
+        android:src="@drawable/user"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toBottomOf="@+id/receiverName" />
+
     <TextView
         android:id="@+id/receiverText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
         android:maxWidth="270dp"
         android:minWidth="50dp"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="hello world hello world hello world hello world hello world hello world hello world hello world hello world z z z z z z z z z "
+        android:text="h world hello worz z "
         android:textColor="#C1161515"
         android:textSize="18sp"
         app:layout_constraintBottom_toTopOf="@+id/receiverTime"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/receiverName" />
+        app:layout_constraintTop_toBottomOf="@+id/receiverImage" />
 
     <TextView
         android:id="@+id/receiverTime"

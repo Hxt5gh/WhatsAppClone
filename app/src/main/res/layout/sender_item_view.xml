@@ -34,20 +34,33 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <ImageView
+            android:id="@+id/senderImage"
+            android:layout_width="250dp"
+            android:layout_height="200dp"
+            android:layout_marginStart="15dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/user"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/senderText"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/senderName" />
+
         <TextView
             android:id="@+id/senderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:maxWidth="270dp"
             android:minWidth="50dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:text="hev hello hev hello hev hello hev hello v v hev hello v  "
+            android:text="hev heo v v hev hello v  "
             android:textColor="#C1161515"
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/senderTime"
             app:layout_constraintEnd_toStartOf="@+id/guideline2"
-            app:layout_constraintTop_toBottomOf="@+id/senderName" />
+            app:layout_constraintTop_toBottomOf="@+id/senderImage" />
 
         <TextView
             android:id="@+id/senderTime"

@@ -6,9 +6,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.provider.MediaStore;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -28,6 +31,7 @@ import com.example.android.whatsapp.databinding.ActivityChatDetailBinding;
 import com.example.android.whatsapp.models.UsersClass;
 import com.example.android.whatsapp.models.messageModel;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -37,8 +41,14 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 public class ChatDetailActivity extends AppCompatActivity {
@@ -50,6 +60,10 @@ public class ChatDetailActivity extends AppCompatActivity {
     private ArrayList<messageModel> list;
     private static final String MYTAG = "ChatDetailActivity";
     String senderName;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    String receverUid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,16 +71,19 @@ public class ChatDetailActivity extends AppCompatActivity {
         binding = ActivityChatDetailBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         getSupportActionBar().hide();
-        mAuth = FirebaseAuth.getInstance();
         list = new ArrayList<>();
+        mAuth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         mRef = database.getReference();
+        firebaseStorage = FirebaseStorage.getInstance();
+        storageReference = firebaseStorage.getReference();
+
 
 
 
         String  senderUid = mAuth.getUid();
         Intent intent = getIntent();
-        String receverUid = intent.getStringExtra("receiverUID" );
+        receverUid = intent.getStringExtra("receiverUID" );
         String  userprofile =    intent.getStringExtra("image_url");
         String username = intent.getStringExtra("User_name" );
 
@@ -92,8 +109,11 @@ public class ChatDetailActivity extends AppCompatActivity {
         binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
-        final  String senderRoom = senderUid + receverUid;
-        final  String receiverRoom = receverUid  + senderUid;
+     final String   senderRoom = senderUid + receverUid;
+      final String  receiverRoom = receverUid  + senderUid;
+
+
+        //handler
 
         new Handler(Looper.getMainLooper()).post(new Runnable()
         {
@@ -106,7 +126,7 @@ public class ChatDetailActivity extends AppCompatActivity {
 
 
                 //fetching username for sender name
-          mRef.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").addValueEventListener(new ValueEventListener() {
+            mRef.child("Users").child(FirebaseAuth.getInstance().getUid()).child("userName").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -118,12 +138,11 @@ public class ChatDetailActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+            }});
 
 
-          //creating room of chat
-           mRef.child("Chats").child(senderRoom).addChildEventListener(new ChildEventListener() {
+              //creating room of chat
+             mRef.child("Chats").child(senderRoom).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
 
@@ -154,28 +173,28 @@ public class ChatDetailActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
-            }
-        });
+            }});
 
                 //publishing caht on fireabase
-            binding.btnSendText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                 binding.btnSendText.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
                 Toast.makeText(ChatDetailActivity.this, "send", Toast.LENGTH_SHORT).show();
                 Log.d(MYTAG, "onCreate: sender " +senderRoom);
                 Log.d(MYTAG, "onCreate: recever " +receiverRoom);
 
 
 
-                String data = binding.editTextTextPersonName.getText().toString();
-                   binding.editTextTextPersonName.setText("");
-                   if(!TextUtils.isEmpty(data)) {
+                         String data = binding.editTextTextPersonName.getText().toString();
+                         binding.editTextTextPersonName.setText("");
+                         if(!TextUtils.isEmpty(data))
+                         {
 
 
-                       messageModel model = new messageModel(senderUid, data);
-                       model.setLastMessage(System.currentTimeMillis());
-
-                       database.getReference().child("Chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    messageModel model = new messageModel(senderUid, data);
+                                    model.setLastMessage(System.currentTimeMillis());
+                                    database.getReference().child("Chats").child(senderRoom).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>()
+                                {
                                    @Override
                                    public void onSuccess(Void unused) {
 //                                       inserting in receverroom
@@ -191,7 +210,11 @@ public class ChatDetailActivity extends AppCompatActivity {
                                    }
                                });
 
-                   }
+                        }
+
+
+                }});
+
 
 
             }
@@ -199,13 +222,104 @@ public class ChatDetailActivity extends AppCompatActivity {
 
 
 
+        binding.attachment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ChatDetailActivity.this, "ll", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/* video/*");
+                startActivityForResult(intent , 46);
+
             }
         });
+
+        binding.camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ChatDetailActivity.this, "oo", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 46)
+        {
+            if (data != null)
+            {
+                Uri imageSourse= data.getData();
+                uploadImageWithCompress(imageSourse);
+
+            }
+        }
     }
 
 
+    private Bitmap bmp;
+    private ByteArrayOutputStream baos;
+
+    private void uploadImageWithCompress(Uri imageUri ) {
+        final String roomReceiver = receverUid +FirebaseAuth.getInstance().getUid();
+        final String roomSender = FirebaseAuth.getInstance().getUid() + receverUid;
 
 
+        // images are stored with timestamp as their name
+        String timestamp = "" + System.currentTimeMillis();
+
+        bmp = null;
+        try {
+            bmp = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        baos = new ByteArrayOutputStream();
+
+        // here we can choose quality factor
+        // in third parameter(ex. here it is 25)
+        bmp.compress(Bitmap.CompressFormat.JPEG, 25, baos);
+
+        byte[] fileInBytes = baos.toByteArray();
+        Calendar calendar = Calendar.getInstance();
+
+
+        storageReference.child("media").child(calendar.getTimeInMillis()+"").putBytes(fileInBytes).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Toast.makeText(ChatDetailActivity.this, "succ", Toast.LENGTH_SHORT).show();
+
+                storageReference.child("media").child(calendar.getTimeInMillis()+"").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+
+                        messageModel model = new messageModel();
+                        model.setuId(FirebaseAuth.getInstance().getUid());
+                        model.setMessage("photo");
+                        model.setLastMessage(System.currentTimeMillis());
+                        model.setImageUri(uri.toString());
+
+                        database.getReference().child("Chats").child(roomSender).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                            @Override
+                            public void onSuccess(Void unused) {
+                                database.getReference().child("Chats").child(roomReceiver).push().setValue(model).addOnSuccessListener(new OnSuccessListener<Void>() {
+                                    @Override
+                                    public void onSuccess(Void unused) {
+                                        Toast.makeText(ChatDetailActivity.this, "", Toast.LENGTH_SHORT).show();
+
+                                    }
+                                });
+
+                            }
+                        });
+
+                    }
+                });
+            }
+        });
+
+    }
 
 
     @Override

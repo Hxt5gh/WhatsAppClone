@@ -7,6 +7,15 @@ public class messageModel {
     long lastMessage;
     String nName;
     String recvierName;
+    String imageUri;
+
+    public String getImageUri() {
+        return imageUri;
+    }
+
+    public void setImageUri(String imageUri) {
+        this.imageUri = imageUri;
+    }
 
     public String getRecvierName() {
         return recvierName;
