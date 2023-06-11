@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">whatsApp</string>
+    <string name="app_name">Chat</string>
     <string name="name">Name</string>
     <string name="email">Email</string>
     <string name="password">Password</string>

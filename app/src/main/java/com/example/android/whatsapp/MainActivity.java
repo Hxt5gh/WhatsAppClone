@@ -33,7 +33,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
         mAuth = FirebaseAuth.getInstance();
 
-        pageElements= new String[]{"Chats", "Status", "Call"};
+//        pageElements= new String[]{"Chats", "Status", "Call"};
+        pageElements= new String[]{"Chats", "Status"};
 
 
         adapter = new fragmentAdapter(this);

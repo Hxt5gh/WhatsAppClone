@@ -35,8 +35,8 @@ public class fragmentAdapter extends FragmentStateAdapter {
             case  1 :
                 return new StatusFragment();
 
-            case 2 :
-                return new CallFragment();
+           // case 2 :
+              //  return new CallFragment();
             default: new ChatsFragment();
         }
         return new ChatsFragment();
@@ -44,6 +44,6 @@ public class fragmentAdapter extends FragmentStateAdapter {
 
     @Override
     public int getItemCount() {
-        return 3;
+        return 2;
     }
 }
