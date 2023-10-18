@@ -30,6 +30,7 @@ Group Chat
 Updating Profile Pic and Name
 ![photo_1_2023-10-18_20-45-20](https://github.com/Hxt5gh/WhatsAppClone/assets/100848388/cb1eb592-d647-48bd-8a53-75163d16707a)
 ![photo_2_2023-10-18_20-45-20](https://github.com/Hxt5gh/WhatsAppClone/assets/100848388/0bae7454-8344-415c-aaec-7d5baad4fe6b)
+![photo_3_2023-10-18_20-45-20](https://github.com/Hxt5gh/WhatsAppClone/assets/100848388/751f4e4f-9500-4a46-a58f-aa08c36941a4)
 
 
 
